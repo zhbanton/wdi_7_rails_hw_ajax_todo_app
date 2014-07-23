@@ -10,6 +10,7 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'spring', group: :development
+gem 'bootstrap-sass'
 
 # Access Rails routes in your JavaScript
 # (run `rake tmp:cache:clear` after changing routes)
