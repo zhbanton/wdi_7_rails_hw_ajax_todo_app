@@ -8,10 +8,12 @@ class TodoItemsController < ApplicationController
 
   def index
     @todo_items = TodoItem.all
+    respond_with(@todo_items)
   end
 
   def show
     @todo_item = TodoItem.find(params[:id])
+    respond_with(@todo_item)
   end
 
   def create
