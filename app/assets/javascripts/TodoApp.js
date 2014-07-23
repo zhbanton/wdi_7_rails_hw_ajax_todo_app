@@ -3,13 +3,13 @@ TodoApp = {
     this.getTodoItems();
     $('#item-submit').click($.proxy(this.createTodoItem, this));
     // $('body').on('click', '.complete-btn', $.proxy(this.completeItem, this));
-    // $('body').on('click', '.delete-btn', $.proxy(this.deleteItem, this));
+    $('body').on('click', '.delete-btn', $.proxy(this.deleteTodoItem, this));
   },
   getTodoItems: function() {
     $.ajax({
       url: 'http://localhost:3000/todo_items'
     })
-    .done($.proxy(this.todosCallback, this));
+    .done(this.todosCallback);
   },
   todosCallback: function(todoItems) {
     todoItems.forEach(function(todo) {
@@ -26,7 +26,7 @@ TodoApp = {
         data: requestObj,
         dataType: 'json'
       })
-      .done($.proxy(this.addTodoItem, this));
+      .done(this.addTodoItem);
     }
     $('#item-text').val('');
     event.preventDefault();
@@ -34,6 +34,11 @@ TodoApp = {
   addTodoItem: function(todoItem){
     var newTodo = new TodoItem(todoItem.name);
     $('#unfinished-items').append(newTodo.toHtml());
+  },
+  deleteTodoItem: function(event) {
+    console.log(this);
+    console.log($(this))
+    event.preventDefault();
   }
 
 };
