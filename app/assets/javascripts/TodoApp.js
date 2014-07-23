@@ -1,5 +1,5 @@
 TodoApp = {
-  url: 'http://localhost:3000/todo_items',
+  url: 'http://localhost:3000/todo_items/',
   init: function() {
     this.getTodoItems();
     $('#item-submit').click($.proxy(this.createTodoItem, this));
@@ -13,6 +13,7 @@ TodoApp = {
     .done(this.todosCallback);
   },
   todosCallback: function(todoItems) {
+    $('#unfinished-items').empty();
     todoItems.forEach(function(todo) {
       newTodo = new TodoItem(todo);
       $('#unfinished-items').append(newTodo.toHtml());
@@ -40,9 +41,7 @@ TodoApp = {
     var id = $(event.currentTarget).parent().data('id');
     $.ajax ({
       type: "DELETE",
-      url: "http://localhost:3000/todo_items"
-
-    })
-    .done(this.removeTodoItem);
+      url: this.url + id,
+    }).done(this.getTodoItems());
   }
 };

@@ -11,23 +11,21 @@ class TodoItemsController < ApplicationController
     respond_with(@todo_items)
   end
 
-  def show
-    @todo_item = TodoItem.find(params[:id])
+  def create
+    @todo_item = TodoItem.new(todo_item_params)
+    @todo_item.save
     respond_with(@todo_item)
   end
 
-  def create
-    @todo_item = TodoItem.new(todo_item_params)
-    if @todo_item.save
-      respond_with(@todo_item)
-    else
-      respond_with(@todo_item.errors)
-    end
-  end
+  def update
+    @todo_item = TodoItem.find(params[:id])
+    @todo_item.save
+    respond_with(TodoItem.all)
 
   def destroy
-    @todo_item = TodoItem.find(id: params[:id])
+    @todo_item = TodoItem.find(params[:id])
     @todo_item.destroy
+    respond_with(TodoItem.all)
   end
 
   private
