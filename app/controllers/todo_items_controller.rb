@@ -21,6 +21,7 @@ class TodoItemsController < ApplicationController
     @todo_item = TodoItem.find(params[:id])
     @todo_item.save
     respond_with(TodoItem.all)
+  end
 
   def destroy
     @todo_item = TodoItem.find(params[:id])
