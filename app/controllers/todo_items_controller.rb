@@ -25,6 +25,11 @@ class TodoItemsController < ApplicationController
     end
   end
 
+  def destroy
+    @todo_item = TodoItem.find(id: params[:id])
+    @todo_item.destroy
+  end
+
   private
 
   def todo_item_params
