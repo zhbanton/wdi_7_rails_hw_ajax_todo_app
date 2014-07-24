@@ -11,6 +11,7 @@ gem 'turbolinks'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'spring', group: :development
 gem 'bootstrap-sass'
+gem 'autoprefixer-rails'
 
 # Access Rails routes in your JavaScript
 # (run `rake tmp:cache:clear` after changing routes)

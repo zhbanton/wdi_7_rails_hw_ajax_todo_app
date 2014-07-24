@@ -3,7 +3,7 @@ TodoApp = {
   init: function() {
     this.getTodoItems();
     $('#item-submit').click($.proxy(this.createTodoItem, this));
-    // $('body').on('click', '.complete-btn', $.proxy(this.completeItem, this));
+    $('body').on('click', '.complete-btn', $.proxy(this.completeTodoItem, this));
     $('body').on('click', '.delete-btn', $.proxy(this.deleteTodoItem, this));
   },
   getTodoItems: function() {
@@ -13,14 +13,20 @@ TodoApp = {
     .done(this.todosCallback);
   },
   todosCallback: function(todoItems) {
-    $('#unfinished-items').empty();
+    $('#unfinished-items .unfinished-item').empty();
+    $('#finished-items .finished-item').empty();
     todoItems.forEach(function(todo) {
-      newTodo = new TodoItem(todo);
-      $('#unfinished-items').append(newTodo.toHtml());
+      newTodo = new TodoItem(todo).toHtml();
+      if (newTodo.hasClass('unfinished-item')) {
+        $('#unfinished-items').append(newTodo);
+      }
+      else {
+        $('#finished-items').append(newTodo);
+      }
     });
   },
   createTodoItem: function(event) {
-    var requestObj = {todo_item: {name: $('#item-text').val()}};
+    var requestObj = {todo_item: {name: $('#item-text').val(), is_finished: false}};
     if (/\S/.test($('#item-text').val())) {
       $.ajax({
         type: "POST",
@@ -28,20 +34,28 @@ TodoApp = {
         data: requestObj,
         dataType: 'json'
       })
-      .done(this.addTodoItem);
+      .done(this.getTodoItems());
     }
     $('#item-text').val('');
     event.preventDefault();
   },
-  addTodoItem: function(todoItem){
-    var newTodo = new TodoItem(todoItem);
-    $('#unfinished-items').append(newTodo.toHtml());
+  completeTodoItem: function(event) {
+    var requestObj = {todo_item: {is_finished: true}};
+    var id = $(event.currentTarget).parent().data('id');
+    $.ajax ({
+      type: "PATCH",
+      url: this.url + id,
+      data: requestObj,
+      dataType: 'json'
+    })
+    .done(this.getTodoItems());
   },
   deleteTodoItem: function(event) {
     var id = $(event.currentTarget).parent().data('id');
     $.ajax ({
       type: "DELETE",
-      url: this.url + id,
-    }).done(this.getTodoItems());
+      url: this.url + id
+    })
+    .done(this.getTodoItems());
   }
 };
