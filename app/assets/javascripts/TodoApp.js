@@ -10,7 +10,9 @@ TodoApp = {
     $.ajax({
       url: this.url,
     })
-    .done($.proxy(this.todosCallback, this));
+    .done(function(data){
+      $('#container').html(HandlebarsTemplates.todos(data));
+    });
   },
   todosCallback: function(todoItems) {
     var unfinishedCount = 0;
