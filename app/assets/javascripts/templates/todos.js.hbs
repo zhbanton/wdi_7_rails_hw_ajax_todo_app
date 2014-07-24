@@ -9,7 +9,7 @@
       </tr>
       {{#each todo_items}}
         {{#unless is_finished}}
-          <tr data-id={{id}}>
+          <tr class="unfinished-item" data-id={{id}}>
             <td>{{name}}</td>
             <td>{{created_at}}</td>
             <td>
@@ -32,7 +32,7 @@
       </tr>
       {{#each todo_items}}
         {{#if is_finished}}
-          <tr data-id={{id}}>
+          <tr class="finished-item" data-id={{id}}>
             <td>{{name}}</td>
             <td>{{updated_at}}</td>
             <td>

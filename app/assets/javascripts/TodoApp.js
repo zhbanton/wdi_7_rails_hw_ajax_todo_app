@@ -12,6 +12,9 @@ TodoApp = {
     })
     .done(function(data){
       $('#container').html(HandlebarsTemplates.todos(data));
+    }).done(function() {
+      $('#unfinished-count').text($('.unfinished-item').length);
+      $('#finished-count').text($('.finished-item').length);
     });
   },
   createTodoItem: function(event) {
