@@ -1,9 +1,5 @@
 class TodoItemsController < ApplicationController
 
-  def default_serializer_options
-    {root: false}
-  end
-
   respond_to :json
 
   def index
